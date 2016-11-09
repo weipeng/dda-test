@@ -36,6 +36,9 @@ GoNoGo.Game.prototype.create = function() {
   this.dda = new POSM.Posm();
   this.alphaSettings = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75];
   this.mask.alpha = this.dda.init('alpha', this.alphaSettings);
+  // instructions
+  this.add.text(10, 500, 'red: go', { font: "24px Arial", fill: "#000000", align: "center" });
+  this.add.text(10, 550, 'blue: no go', { font: "24px Arial", fill: "#000000", align: "center" });
   // start the first trial
   this.trial();
 };
@@ -43,7 +46,7 @@ GoNoGo.Game.prototype.create = function() {
 /**
  * Game.prototype.update - displays debug info
  *
- * @return {type}  
+ * @return {type}
  */
 GoNoGo.Game.prototype.update = function() {
   this.game.debug.text('success rate: ' + this.correctTrials/this.totalTrials, 10, 10, 'black');
