@@ -34,9 +34,20 @@ GoNoGo.Game.prototype.create = function() {
   this.duration = 1000;
   // set up DDA
   this.dda = new POSM.Posm();
-  this.mask.alpha = this.dda.init('alpha', [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75]);
+  this.alphaSettings = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75];
+  this.mask.alpha = this.dda.init('alpha', this.alphaSettings);
   // start the first trial
   this.trial();
+};
+
+/**
+ * Game.prototype.update - displays debug info
+ *
+ * @return {type}  
+ */
+GoNoGo.Game.prototype.update = function() {
+  this.game.debug.text('success rate: ' + this.correctTrials/this.totalTrials, 10, 10, 'black');
+  this.game.debug.text('difficulty setting: ' + this.alphaSettings.indexOf(this.mask.alpha), 10, 30, 'black');
 };
 
 /**
