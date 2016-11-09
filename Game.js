@@ -23,15 +23,18 @@ GoNoGo.Game.prototype.create = function() {
   this.red.anchor.set(0.5, 0.5);
   this.blue = this.add.sprite(this.world.centerX, this.world.centerY, 'blue-circle');
   this.blue.anchor.set(0.5, 0.5);
+  this.mask = this.add.sprite(this.world.centerX, this.world.centerY, 'purple-circle');
+  this.mask.anchor.set(0.5, 0.5);
   // success rate
   this.totalTrials = 0;
   this.correctTrials = 0;
   // set up the input key
   this.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  // duration of each trial
+  this.duration = 1000;
   // set up DDA
   this.dda = new POSM.Posm();
-  this.interval = this.dda.init('interval', [2000, 1500, 1000, 500, 250]);
-  console.log(this.interval)
+  this.mask.alpha = this.dda.init('alpha', [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75]);
   // start the first trial
   this.trial();
 };
@@ -68,7 +71,7 @@ GoNoGo.Game.prototype.onTimeout = function() {
  * @return {type}
  */
 GoNoGo.Game.prototype.trial = function() {
-  this.updateInterval();
+  this.updateAlpha();
   this.reset();
   this.time.events.add(Phaser.Timer.SECOND * 0.5, function() {
     if (this.rnd.integerInRange(0, 10) < 5) {
@@ -76,8 +79,9 @@ GoNoGo.Game.prototype.trial = function() {
     } else {
       this.blue.revive();
     }
+    this.mask.revive();
     this.space.onDown.addOnce(this.onSpaceBarPressed, this);
-    this.time.events.add(this.interval, this.onTimeout, this);
+    this.time.events.add(this.duration, this.onTimeout, this);
   }, this);
 };
 
@@ -91,14 +95,14 @@ GoNoGo.Game.prototype.reset = function() {
   this.time.events.removeAll();
   this.red.kill();
   this.blue.kill();
+  this.mask.kill();
 };
 
-GoNoGo.Game.prototype.updateInterval = function() {
+GoNoGo.Game.prototype.updateAlpha = function() {
   var success = this.correctTrials/this.totalTrials;
   if (success < 0.75) {
-    this.interval = this.dda.update('interval', POSM.TOO_HARD);
+    this.mask.alpha = this.dda.update('alpha', POSM.TOO_HARD);
   } else {
-    this.interval = this.dda.update('interval', POSM.TOO_EASY);
+    this.mask.alpha = this.dda.update('alpha', POSM.TOO_EASY);
   }
-  console.log(this.interval);
 };
