@@ -19,6 +19,7 @@ POSM.Posm.prototype.init = function(name, values) {
     this[name].belief.push(1);
   }
   this.current = Math.floor(values.length / 2);
+  console.log('starting index: ' + this.current)
   return this[name].values[this.current];
 };
 
@@ -57,9 +58,22 @@ POSM.Posm.prototype.update = function(name, observation) {
       settings.push(harder[belief]);
     }
   }
-  // now find which of these settings has the MOST belief
-  this.current = settings.indexOf(Math.max(...settings));
+  // update the belief with the CURRENT index
   this.updateBelief(name, observation);
+  // now find which of the settings has the highest belief and update the
+  // current index
+  var maxBelief = Math.max(...settings);
+  var possibleSettings = [];
+  for (var setting in settings) {
+    if (settings[setting] === maxBelief) {
+      possibleSettings.push(parseInt(setting, 10));
+    }
+  }
+  if (observation = POSM.TOO_HARD) {
+    this.current = possibleSettings[0];
+  } else {
+    this.current = possibleSettings[possibleSettings.length - 1];
+  }
   return this[name].values[this.current];
 }
 
@@ -68,7 +82,7 @@ POSM.Posm.prototype.update = function(name, observation) {
  *
  * @param  {string} name        the variable the setting are for
  * @param  {string} observation an observation about the difficulty of the setting
- */ 
+ */
 POSM.Posm.prototype.updateBelief = function(name, observation) {
   if (observation === POSM.TOO_HARD) {
     // update the belief of the current setting, and those more difficult

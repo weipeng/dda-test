@@ -26,8 +26,8 @@ GoNoGo.Game.prototype.create = function() {
   this.mask = this.add.sprite(this.world.centerX, this.world.centerY, 'purple-circle');
   this.mask.anchor.set(0.5, 0.5);
   // success rate
-  this.totalTrials = 0;
-  this.correctTrials = 0;
+  this.totalTrials = 1;
+  this.correctTrials = 1;
   // set up the input key
   this.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   // duration of each trial
@@ -39,6 +39,8 @@ GoNoGo.Game.prototype.create = function() {
   // instructions
   this.add.text(10, 500, 'red: go', { font: "24px Arial", fill: "#000000", align: "center" });
   this.add.text(10, 550, 'blue: no go', { font: "24px Arial", fill: "#000000", align: "center" });
+  // counts the number of trials
+  this.counter = 0;
   // start the first trial
   this.trial();
 };
@@ -85,7 +87,9 @@ GoNoGo.Game.prototype.onTimeout = function() {
  * @return {type}
  */
 GoNoGo.Game.prototype.trial = function() {
-  this.updateAlpha();
+  if (++this.counter % 5 ===0) {
+    this.updateAlpha();
+  }
   this.reset();
   this.time.events.add(Phaser.Timer.SECOND * 0.5, function() {
     if (this.rnd.integerInRange(0, 10) < 5) {
@@ -114,6 +118,8 @@ GoNoGo.Game.prototype.reset = function() {
 
 GoNoGo.Game.prototype.updateAlpha = function() {
   var success = this.correctTrials/this.totalTrials;
+  this.correctTrials = 1;
+  this.totalTrials = 1;
   if (success < 0.75) {
     this.mask.alpha = this.dda.update('alpha', POSM.TOO_HARD);
   } else {
