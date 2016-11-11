@@ -4,7 +4,7 @@ POSM.TOO_HARD = 1;
 
 POSM.TOO_EASY = 0;
 
-POSM.LEARNING_RATE = 0.5;
+POSM.LEARNING_RATE = 0.75;
 
 POSM.Posm = function() {
 

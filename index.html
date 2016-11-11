@@ -5,8 +5,9 @@
 	<title>DDA test</title>
 	<script src="vendor/phaser.js"></script>
 	<script src="posm/Posm.js"></script>
-	<script src="Preloader.js"></script>
-	<script src="Game.js"></script>
+	<script src="src/Preloader.js"></script>
+	<script src="src/Menu.js"></script>
+	<script src="src/GoNoGo.js"></script>
 </head>
 <body>
 
@@ -15,8 +16,9 @@
 <script type="text/javascript">
 window.onload = function() {
 	var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'gameContainer');
-	game.state.add('Preloader', GoNoGo.Preloader);
-	game.state.add('Game', GoNoGo.Game);
+	game.state.add('Preloader', DDATest.Preloader);
+	game.state.add('GoNoGo', DDATest.GoNoGo);
+	game.state.add('Menu', DDATest.Menu);
 	game.state.start('Preloader');
 };
 </script>

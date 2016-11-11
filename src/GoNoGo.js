@@ -1,23 +1,21 @@
- var GoNoGo = GoNoGo || {};
+ var DDATest = DDATest || {};
 
 /**
- * GoNoGo - constructor
+ * DDATest - constructor
  *
  * @param  {type} game the game this state belongs to
  * @return {type}
  */
-GoNoGo.Game = function(game) {
+DDATest.GoNoGo = function(game) {
 
 };
 
 /**
- * Game.prototype.create - creates the game
+ * GoNoGo.prototype.create - creates the game
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.create = function() {
-  // set the background to white
-  this.stage.backgroundColor = "#ffffff";
+DDATest.GoNoGo.prototype.create = function() {
   // add the sprites
   this.red = this.add.sprite(this.world.centerX, this.world.centerY, 'red-circle');
   this.red.anchor.set(0.5, 0.5);
@@ -34,7 +32,7 @@ GoNoGo.Game.prototype.create = function() {
   this.duration = 1000;
   // set up DDA
   this.dda = new POSM.Posm();
-  this.alphaSettings = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75];
+  this.alphaSettings = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.99, 1];
   this.mask.alpha = this.dda.init('alpha', this.alphaSettings);
   // instructions
   this.add.text(10, 500, 'red: go', { font: "24px Arial", fill: "#000000", align: "center" });
@@ -46,21 +44,21 @@ GoNoGo.Game.prototype.create = function() {
 };
 
 /**
- * Game.prototype.update - displays debug info
+ * GoNoGo.prototype.update - displays debug info
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.update = function() {
+DDATest.GoNoGo.prototype.update = function() {
   this.game.debug.text('success rate: ' + this.correctTrials/this.totalTrials, 10, 10, 'black');
   this.game.debug.text('difficulty setting: ' + this.alphaSettings.indexOf(this.mask.alpha), 10, 30, 'black');
 };
 
 /**
- * Game.prototype.check - checks which sprite is alive and updates success rate
+ * GoNoGo.prototype.check - checks which sprite is alive and updates success rate
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.onSpaceBarPressed = function() {
+DDATest.GoNoGo.prototype.onSpaceBarPressed = function() {
   if (this.red.alive) {
     this.correctTrials++
   }
@@ -69,11 +67,11 @@ GoNoGo.Game.prototype.onSpaceBarPressed = function() {
 };
 
 /**
- * Game.prototype.onTimeout - checks which sprite is alive and updates success rate
+ * GoNoGo.prototype.onTimeout - checks which sprite is alive and updates success rate
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.onTimeout = function() {
+DDATest.GoNoGo.prototype.onTimeout = function() {
   if (this.blue.alive) {
     this.correctTrials++
   }
@@ -82,11 +80,11 @@ GoNoGo.Game.prototype.onTimeout = function() {
 };
 
 /**
- * Game.prototype.trial - runs a new trial
+ * GoNoGo.prototype.trial - runs a new trial
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.trial = function() {
+DDATest.GoNoGo.prototype.trial = function() {
   if (++this.counter % 5 ===0) {
     this.updateAlpha();
   }
@@ -104,11 +102,11 @@ GoNoGo.Game.prototype.trial = function() {
 };
 
 /**
- * Game.prototype.reset - resets keys and timer, and kills sprites
+ * GoNoGo.prototype.reset - resets keys and timer, and kills sprites
  *
  * @return {type}
  */
-GoNoGo.Game.prototype.reset = function() {
+DDATest.GoNoGo.prototype.reset = function() {
   this.space.reset(true);
   this.time.events.removeAll();
   this.red.kill();
@@ -116,7 +114,7 @@ GoNoGo.Game.prototype.reset = function() {
   this.mask.kill();
 };
 
-GoNoGo.Game.prototype.updateAlpha = function() {
+DDATest.GoNoGo.prototype.updateAlpha = function() {
   var success = this.correctTrials/this.totalTrials;
   this.correctTrials = 1;
   this.totalTrials = 1;

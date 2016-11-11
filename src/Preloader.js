@@ -1,15 +1,15 @@
-var GoNoGo = {};
+var DDATest = {};
 
-GoNoGo.Preloader = function(game) {
+DDATest.Preloader = function(game) {
 
 };
 
-GoNoGo.Preloader.prototype.preload = function() {
+DDATest.Preloader.prototype.preload = function() {
   this.load.image('red-circle', 'assets/red-circle.png');
   this.load.image('blue-circle', 'assets/blue-circle.png');
   this.load.image('purple-circle', 'assets/purple-circle.png');
 };
 
-GoNoGo.Preloader.prototype.create = function() {
-  this.state.start('Game');
+DDATest.Preloader.prototype.create = function() {
+  this.state.start('Menu');
 };
