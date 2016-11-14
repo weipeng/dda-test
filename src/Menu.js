@@ -14,10 +14,10 @@ DDATest.Menu.prototype.create = function() {
     this.state.start('GoNoGo');
   }, this);
   //
-  this.asteroids = this.add.text(this.world.centerX, this.world.centerY + 20, 'play some other game');
-  this.asteroids.anchor.set(0.5, 0.5);
-  this.asteroids.inputEnabled = true;
-  this.asteroids.events.onInputUp.add(function() {
-    // do nothing
+  this.dodge = this.add.text(this.world.centerX, this.world.centerY + 20, 'play dodge game >>');
+  this.dodge.anchor.set(0.5, 0.5);
+  this.dodge.inputEnabled = true;
+  this.dodge.events.onInputUp.add(function() {
+    this.state.start('Dodge');
   }, this);
 };
