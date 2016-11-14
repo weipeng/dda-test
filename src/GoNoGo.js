@@ -16,6 +16,13 @@ DDATest.GoNoGo = function(game) {
  * @return {type}
  */
 DDATest.GoNoGo.prototype.create = function() {
+  // hide the cursor
+  document.getElementById("gameContainer").style.cursor = "none";
+  // add quit hotkey
+  var quit = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+  quit.onDown.add(function() {
+    this.state.start('Menu');
+  }, this);
   // add the sprites
   this.red = this.add.sprite(this.world.centerX, this.world.centerY, 'red-circle');
   this.red.anchor.set(0.5, 0.5);
@@ -37,6 +44,7 @@ DDATest.GoNoGo.prototype.create = function() {
   // instructions
   this.add.text(10, 500, 'red: go', { font: "24px Arial", fill: "#000000", align: "center" });
   this.add.text(10, 550, 'blue: no go', { font: "24px Arial", fill: "#000000", align: "center" });
+  this.add.text(10, 600, 'ESC to quit', { font: "24px Arial", fill: "#000000", align: "center" });
   // counts the number of trials
   this.counter = 0;
   // start the first trial
