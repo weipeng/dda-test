@@ -5,17 +5,18 @@ DDATest.Catch = function(game) {
 };
 
 DDATest.Catch.prototype.create = function() {
+  // juice
+  this.juice = this.game.plugins.add(new Phaser.Plugin.Juicy(this));
   // add quit hotkey
   var quit = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
   quit.onDown.add(function() {
     this.state.start('Menu');
   }, this);
   // instructions
-  this.add.text(10, 500, 'catch the balls', { font: "24px Arial", fill: "#000000", align: "center" });
   this.add.text(10, 550, 'mouse to move', { font: "24px Arial", fill: "#000000", align: "center" });
   this.add.text(10, 600, 'ESC to quit', { font: "24px Arial", fill: "#000000", align: "center" });
   // hide the cursor
-  document.getElementById("gameContainer").style.cursor = "none";
+  //document.getElementById("gameContainer").style.cursor = "none";
   // vars
   this.caught = 0;
   this.counter = -1;
@@ -36,6 +37,12 @@ DDATest.Catch.prototype.create = function() {
   this.ball.anchor.setTo(0.5, 0.5);
   this.physics.enable(this.ball, Phaser.Physics.ARCADE);
   this.resetBall();
+  // emitter
+  this.emitter = this.add.emitter();
+  this.emitter.lifespan = 200;
+  this.emitter.maxParticleScale = 0.1;
+  this.emitter.minParticleScale = 0.25;
+  this.emitter.makeParticles('ball');
 };
 
 DDATest.Catch.prototype.update = function() {
@@ -43,16 +50,16 @@ DDATest.Catch.prototype.update = function() {
   if (this.ball.y > this.player.y) {
     this.resetBall();
   }
+  this.emitter.emitParticle(this.ball.x, this.ball.y);
   this.game.debug.text('difficulty setting: ' + this.velocities.indexOf(this.velocity), 10, 30, 'black');
-};
-
-DDATest.Catch.prototype.onHit = function() {
-
 };
 
 DDATest.Catch.prototype.resetBall = function() {
   if (Phaser.Rectangle.intersects(this.player.getBounds(), this.ball.getBounds())) {
-    if (this.counter >= 0) {this.caught++;};
+    if (this.counter >= 0) {
+      this.caught++;
+      this.juice.shake();
+    };
   }
   if (this.counter % 3 === 0) {
     this.setVelocity();
