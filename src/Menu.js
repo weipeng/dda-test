@@ -16,7 +16,7 @@ DDATest.Menu.prototype.create = function() {
     this.state.start('GoNoGo');
   }, this);
   //
-  this.dodge = this.add.text(this.world.centerX, this.world.centerY + 20, 'play dodge game >>');
+  this.dodge = this.add.text(this.world.centerX, this.world.centerY + 20, 'play catch >>');
   this.dodge.anchor.set(0.5, 0.5);
   this.dodge.inputEnabled = true;
   this.dodge.events.onInputUp.add(function() {
