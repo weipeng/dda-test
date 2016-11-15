@@ -43,6 +43,8 @@ DDATest.Catch.prototype.create = function() {
   this.emitter.maxParticleScale = 0.1;
   this.emitter.minParticleScale = 0.25;
   this.emitter.makeParticles('ball');
+  // sound
+  this.catchAudio = this.add.audio('collect-coin');
 };
 
 DDATest.Catch.prototype.update = function() {
@@ -59,6 +61,7 @@ DDATest.Catch.prototype.resetBall = function() {
     if (this.counter >= 0) {
       this.caught++;
       this.juice.shake();
+      this.catchAudio.play();
     };
   }
   if (this.counter % 3 === 0) {
