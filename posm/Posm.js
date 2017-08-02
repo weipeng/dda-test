@@ -69,6 +69,7 @@ POSM.Posm.prototype.update = function(name, observation) {
       possibleSettings.push(parseInt(setting, 10));
     }
   }
+  // Guess it should be === or == in the following line instead of =.
   if (observation = POSM.TOO_HARD) {
     this.current = possibleSettings[0];
   } else {
