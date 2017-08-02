@@ -19,6 +19,7 @@ POSM.Posm.prototype.init = function(name, values) {
     this[name].belief.push(1);
   }
   this.current = Math.floor(values.length / 2);
+  # this.current = Math.round(Math.random() * values.length);
   console.log('starting index: ' + this.current)
   return this[name].values[this.current];
 };
